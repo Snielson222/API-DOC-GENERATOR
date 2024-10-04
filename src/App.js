@@ -1,23 +1,27 @@
-import logo from './logo.svg';
+// src/App.js
+import React, { useState } from 'react';
+import Form from './components/Form';
+import Documentation from './components/Documentation';
 import './App.css';
 
 function App() {
+  const [documentation, setDocumentation] = useState(null);
+
+  const handleGenerate = (apiSpec) => {
+    try {
+      const parsedDoc = JSON.parse(apiSpec); // We will enhance this for Swagger/OpenAPI later
+      setDocumentation(parsedDoc);
+    } catch (error) {
+      console.error('Invalid API spec:', error);
+      setDocumentation({ error: 'Invalid API spec format' });
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>API Documentation Generator</h1>
+      <Form onGenerate={handleGenerate} />
+      {documentation && <Documentation doc={documentation} />}
     </div>
   );
 }
