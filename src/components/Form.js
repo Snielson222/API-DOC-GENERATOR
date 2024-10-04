@@ -3,9 +3,15 @@ import React, { useState } from 'react';
 
 const Form = ({ onGenerate }) => {
   const [apiSpec, setApiSpec] = useState('');
+  const [error, setError] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!apiSpec.trim()) {
+      setError('API spec cannot be empty');
+      return;
+    }
+    setError(null);
     onGenerate(apiSpec);
   };
 
@@ -20,6 +26,7 @@ const Form = ({ onGenerate }) => {
         cols="50"
         placeholder="Paste your API spec here..."
       ></textarea>
+      {error && <div style={{ color: 'red' }}>{error}</div>}
       <button type="submit">Generate Documentation</button>
     </form>
   );
