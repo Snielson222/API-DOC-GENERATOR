@@ -9,7 +9,7 @@ function App() {
 
   const handleGenerate = (apiSpec) => {
     try {
-      const parsedDoc = JSON.parse(apiSpec); // We will enhance this for Swagger/OpenAPI later
+      const parsedDoc = JSON.parse(apiSpec);
       setDocumentation(parsedDoc);
     } catch (error) {
       console.error('Invalid API spec:', error);
