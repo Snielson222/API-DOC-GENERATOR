@@ -1,29 +1,27 @@
-// src/components/Documentation.js
 import React from 'react';
 import SwaggerUI from 'swagger-ui-react';
 import 'swagger-ui-react/swagger-ui.css';
 import { RedocStandalone } from 'redoc';
+import { exportToHtml, exportToPdf } from '../utils/exportUtils';
 
 const Documentation = ({ doc }) => {
-  // Check if the input is a Swagger/OpenAPI spec
   const isSwaggerSpec = doc.openapi || doc.swagger;
 
   return (
     <div>
       <h2>Generated Documentation</h2>
       {isSwaggerSpec ? (
-        <div>
-          <h3>Swagger/OpenAPI Documentation</h3>
-          {/* Use SwaggerUI to display the API spec */}
+        <div id="swagger-ui">
           <SwaggerUI spec={doc} />
         </div>
       ) : (
-        <div>
-          <h3>Rendered API Documentation (Redoc)</h3>
-          {/* Use RedocStandalone to render the OpenAPI spec */}
+        <div id="swagger-ui">
           <RedocStandalone spec={doc} />
         </div>
       )}
+
+      <button onClick={() => exportToHtml(doc)}>Export as HTML</button>
+      <button onClick={() => exportToPdf(doc)}>Export as PDF</button>
     </div>
   );
 };
